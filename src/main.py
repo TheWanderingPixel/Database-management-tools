@@ -48,6 +48,7 @@ class WelcomeWidget(QWidget):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setWindowIcon(QIcon('favicon.ico'))
         self._init_conn_manager()
         self.setWindowTitle('数据库管理工具')
         self.resize(1200, 800)
@@ -1004,7 +1005,11 @@ class MainWindow(QMainWindow):
         self.add_sql_editor_tab()
 
 def main():
-    app = QApplication(sys.argv)
+    # 检查并创建db目录
+    db_dir = os.path.join(os.path.dirname(__file__), 'db')
+    if not os.path.exists(db_dir):
+        os.makedirs(db_dir)
+    app = QApplication(sys.argv)  # 必须在所有QWidget之前
     # 主密码流程
     password = None
     is_first = not os.path.exists(KEY_FILE)
@@ -1029,7 +1034,12 @@ def main():
         window.show()
         sys.exit(app.exec_())
     except Exception as e:
-        QMessageBox.critical(None, '启动失败', f'错误: {e}\n{traceback.format_exc()}')
+        box = QMessageBox(None)
+        box.setWindowIcon(QIcon('favicon.ico'))
+        box.setIcon(QMessageBox.Critical)
+        box.setWindowTitle('启动失败')
+        box.setText(f'错误: {e}\n{traceback.format_exc()}')
+        box.exec_()
         return
 
 class MainWindowWithPassword(MainWindow):

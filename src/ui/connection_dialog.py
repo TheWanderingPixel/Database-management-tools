@@ -1,13 +1,14 @@
 from PyQt5.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QComboBox, QFileDialog, QMessageBox, QWidget)
 from PyQt5.QtCore import Qt
-import os
 from db.mysql_client import MySQLClient
 from db.sqlite_client import SQLiteClient
 from .thread_worker import WorkerThread
+from PyQt5.QtGui import QIcon
 
 class ConnectionDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.setWindowIcon(QIcon('favicon.ico'))
         self.setWindowTitle('新建/编辑数据库连接')
         self.resize(400, 300)
         self.conn_info = None

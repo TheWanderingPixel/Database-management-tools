@@ -3,10 +3,12 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 import numpy as np
 import matplotlib
+from PyQt5.QtGui import QIcon
 
 class VisualizeDialog(QDialog):
     def __init__(self, table_name, fields, data, parent=None):
         super().__init__(parent)
+        self.setWindowIcon(QIcon('favicon.ico'))
         self.setWindowTitle(f'可视化 - {table_name}')
         self.resize(600, 500)
         self.fields = fields

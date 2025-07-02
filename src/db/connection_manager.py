@@ -7,10 +7,16 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.backends import default_backend
 import base64
 import secrets
+import sys
 
-CONNECTIONS_FILE = os.path.join(os.path.dirname(__file__), 'connections.json.enc')
-KEY_FILE = os.path.join(os.path.dirname(__file__), 'key.bin.enc')
-SALT_FILE = os.path.join(os.path.dirname(__file__), 'key.salt')
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.dirname(__file__), relative_path)
+
+CONNECTIONS_FILE = resource_path('db/connections.json.enc')
+KEY_FILE = resource_path('db/key.bin.enc')
+SALT_FILE = resource_path('db/key.salt')
 
 class ConnectionManager:
     def __init__(self, password: str = None):
