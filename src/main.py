@@ -17,6 +17,7 @@ import shutil
 from datetime import datetime
 import os
 import traceback
+from db.utils import resource_path
 
 class WelcomeWidget(QWidget):
     def __init__(self, tab_widget, parent=None):
@@ -48,7 +49,7 @@ class WelcomeWidget(QWidget):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowIcon(QIcon('favicon.ico'))
+        self.setWindowIcon(QIcon(resource_path('res/img/favicon.ico')))
         self._init_conn_manager()
         self.setWindowTitle('数据库管理工具')
         self.resize(1200, 800)
@@ -1035,7 +1036,8 @@ def main():
         sys.exit(app.exec_())
     except Exception as e:
         box = QMessageBox(None)
-        box.setWindowIcon(QIcon('favicon.ico'))
+        icon_path = resource_path('res/img/favicon.ico')
+        box.setWindowIcon(QIcon(icon_path))
         box.setIcon(QMessageBox.Critical)
         box.setWindowTitle('启动失败')
         box.setText(f'错误: {e}\n{traceback.format_exc()}')

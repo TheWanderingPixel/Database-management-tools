@@ -34,8 +34,5 @@
 
 - docs/ 文档
 - src/ 源代码
-- tests/ 测试代码
 
-## 许可证
 
-MIT License

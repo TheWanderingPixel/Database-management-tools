@@ -8,15 +8,11 @@ from cryptography.hazmat.backends import default_backend
 import base64
 import secrets
 import sys
+from db.utils import data_path
 
-def resource_path(relative_path):
-    if hasattr(sys, '_MEIPASS'):
-        return os.path.join(sys._MEIPASS, relative_path)
-    return os.path.join(os.path.dirname(__file__), relative_path)
-
-CONNECTIONS_FILE = resource_path('db/connections.json.enc')
-KEY_FILE = resource_path('db/key.bin.enc')
-SALT_FILE = resource_path('db/key.salt')
+CONNECTIONS_FILE = data_path('connections.json.enc')
+KEY_FILE = data_path('key.bin.enc')
+SALT_FILE = data_path('key.salt')
 
 class ConnectionManager:
     def __init__(self, password: str = None):
@@ -32,6 +28,7 @@ class ConnectionManager:
             # 首次使用，生成密钥并用主密码加密
             key = Fernet.generate_key()
             salt = secrets.token_bytes(16)
+            os.makedirs(os.path.dirname(SALT_FILE), exist_ok=True)
             with open(SALT_FILE, 'wb') as f:
                 f.write(salt)
             kdf = PBKDF2HMAC(

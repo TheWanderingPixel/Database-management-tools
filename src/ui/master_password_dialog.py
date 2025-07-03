@@ -1,12 +1,14 @@
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox, QHBoxLayout
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtCore import Qt
+from db.utils import resource_path
 
 
 class MasterPasswordDialog(QDialog):
     def __init__(self, mode='set', parent=None):
         super().__init__(parent)
-        self.setWindowIcon(QIcon('favicon.ico'))
+        icon_path = resource_path('res/img/favicon.ico')
+        self.setWindowIcon(QIcon(icon_path))
         self.setWindowTitle('主密码' if mode == 'input' else '设置主密码')
         self.resize(380, 220)
         self.mode = mode
